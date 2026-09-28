@@ -75,6 +75,7 @@ const relatorio = ref({
 const buscar = async () => {
     try {
         loading.value = true;
+        // O campo OS (Ordem de Serviço) vem direto da API (coluna OS de DM_Retiradas).
         retiradas.value = await relatorioService.retiradaRealizadas(relatorio);
         // Atualiza a contagem de registros
         filteredCount.value = retiradas.value.length;
@@ -301,7 +302,7 @@ onMounted(() => {
             :rows="10"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             rowHover
-            :globalFilterFields="['Identificacao', 'Dia', 'matricula', 'nome', 'email', 'ProdutoNome', 'Quantidade', 'ProdutoSKU']"
+            :globalFilterFields="['Identificacao', 'Dia', 'matricula', 'nome', 'email', 'ProdutoNome', 'Quantidade', 'ProdutoSKU', 'OS']"
             ref="dt"
             class="mt-6"
             :sortField="'ProdutoSKU'"
@@ -416,6 +417,13 @@ onMounted(() => {
                 <!-- <template #body="{ data }">
                     <span v-tooltip="data.ProdutoSKU">{{ data.ProdutoSKU }}</span>
                 </template> -->
+            </Column>
+
+            <!-- Coluna OS (Ordem de Serviço) — vem da coluna OS de DM_Retiradas -->
+            <Column field="OS" class="table-cell" sortable header="OS">
+                <template #body="{ data }">
+                    <span v-tooltip="data.OS">{{ data.OS }}</span>
+                </template>
             </Column>
         </DataTable>
 
