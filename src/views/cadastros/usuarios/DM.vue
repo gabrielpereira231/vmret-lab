@@ -92,6 +92,7 @@ const nextValues = reactive({
     2023: { dip: 2 }, // Define a propriedade '2023' com um objeto contendo a propriedade 'dip' com valor 2
     'Locker-Padrao': { dip: 2 }, // Define a propriedade 'Locker-Padrao' com um objeto contendo a propriedade 'dip' com valor 2
     'Locker-Ker': { dip: 0 }, // Define a propriedade 'Locker-Ker' com um objeto contendo a propriedade 'dip' com valor 0
+    'Locker-Opus': { dip: 0 }, // Define a propriedade 'Locker-Opus' com um objeto contendo a propriedade 'dip' com valor 0
     2024: { placa: 101 } // Define a propriedade '2024' com um objeto contendo a propriedade 'placa' com valor 101
 });
 const tipoControladoras = [
@@ -100,7 +101,8 @@ const tipoControladoras = [
     { label: '2023', value: '2023' }, // Adiciona um objeto com as propriedades label e value
     { label: '2024', value: '2024' }, // Adiciona um objeto com as propriedades label e value
     { label: 'Locker Padrão', value: 'Locker-Padrao' }, // Adiciona um objeto com as propriedades label e value
-    { label: 'Locker Ker', value: 'Locker-Ker' } // Adiciona um objeto com as propriedades label e value
+    { label: 'Locker Ker', value: 'Locker-Ker' }, // Adiciona um objeto com as propriedades label e value
+    { label: 'Locker Opus', value: 'Locker-Opus' } // Adiciona um objeto com as propriedades label e value
 ];
 // Objeto de produto selecionado
 const produtoSelecionado = ref({
@@ -1198,6 +1200,26 @@ onMounted(async () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div v-if="controladora.tipo === 'Locker-Opus'">
+                                        <div class="field col-12 mt-3">
+                                            <label class="mr-6 p-0">{{ t('dip') }}: </label>
+                                            <InputText style="width: 250px" v-model="controladora.dados.dip" />
+                                        </div>
+                                        <div class="field card">
+                                            <h4>{{ t('position') }}</h4>
+                                            <div class="checkbox-group">
+                                                <div v-for="i in 25" :key="i" class="checkbox-item mt-3">
+                                                    <Checkbox v-model="controladora.dados.posicao" :value="i" />
+                                                    <label>{{ i }}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="button-group mt-5" style="text-align: end">
+                                                <Button class="mr-3" style="width: 200px" :label="$t('select_all')" @click="selectAllCliente(index)" />
+                                                <Button style="width: 200px" :label="$t('deselect')" @click="desselectAllCliente(index)" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1390,7 +1412,7 @@ onMounted(async () => {
                 <div v-if="tipoControladoraSelecionada" class="lg:col-8 md:col-8 sm:col-8 justify-content-end flex">
                     <InputNumber
                         inputId="Capacidade"
-                        :disabled="tipoControladoraSelecionada === 'Locker-Padrao' || tipoControladoraSelecionada === 'Locker-Ker'"
+                        :disabled="tipoControladoraSelecionada === 'Locker-Padrao' || tipoControladoraSelecionada === 'Locker-Ker' || tipoControladoraSelecionada === 'Locker-Opus'"
                         class="w-full"
                         v-model="produtoSelecionado.Capacidade"
                         :mask="1"

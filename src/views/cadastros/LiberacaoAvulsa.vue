@@ -157,7 +157,7 @@ async function carregarDIPsComPosicoes() {
                             }
 
                             // Dados de DM_Itens
-                            return (item.Controladora === 'Locker-Padrao' || item.Controladora === 'Locker-Ker') && item.Posicao == p.Posicao && item.DIP == dip.DIP;
+                            return (item.Controladora === 'Locker-Padrao' || item.Controladora === 'Locker-Ker' || item.Controladora === 'Locker-Opus') && item.Posicao == p.Posicao && item.DIP == dip.DIP;
                         });
                     }
 
