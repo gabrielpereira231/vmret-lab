@@ -274,7 +274,7 @@ export const resetDMForm = (DM, Controladoras, selectedClient, nextValues) => {
   Object.assign(nextValues['Locker-Padrao'], { dip: 2 });  // A chave 'Locker' recebe o valor { dip: 2 }.
   
   Object.assign(nextValues['Locker-Ker'], { dip: 0 });  // A chave 'Locker' recebe o valor { dip: 2 }.
-  Object.assign(nextValues['Locker-Opus'], { dip: 0 });
+  Object.assign(nextValues['Locker-Upus'], { dip: 0 });
 
   // Modifica o valor associado à chave '2024' em 'nextValues', atribuindo 'placa' com valor 101.
   Object.assign(nextValues['2024'], { placa: 101 });  // A chave '2024' recebe o valor { placa: 101 }.

@@ -70,7 +70,7 @@ export const handleControladoraChange = (Controladoras, produtoSelecionado, List
         motorOptions.value = sortedMotorOptions.map((motor) => ({ label: motor, value: motor }));
     }
     // Verifica se o tipo da controladora é um 'Locker'.
-    else if (selectedControladora.tipo === 'Locker' || selectedControladora.tipo === 'Locker-Padrao' || selectedControladora.tipo === 'Locker-Ker' || selectedControladora.tipo === 'Locker-Opus') {
+    else if (selectedControladora.tipo === 'Locker' || selectedControladora.tipo === 'Locker-Padrao' || selectedControladora.tipo === 'Locker-Ker' || selectedControladora.tipo === 'Locker-Upus') {
         produtoSelecionado.Capacidade = 1;
 
         // Atualiza as opções de DIP para a controladora do tipo Locker.
@@ -78,7 +78,7 @@ export const handleControladoraChange = (Controladoras, produtoSelecionado, List
             // Separa a posição em tipo e identificador, removendo espaços.
             const [tipo, identificador] = item.Posicao.replace(/\s/g, '').split('/');
             // Retorna os itens que correspondem ao tipo 'Locker' e ao identificador da controladora.
-            return (tipo === 'Locker' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Opus') && Number(identificador) === selectedControladora.dados.dip;
+            return (tipo === 'Locker' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Upus') && Number(identificador) === selectedControladora.dados.dip;
         }).map((item) => {
             // Para cada item, separa a posição e retorna a posição específica do Locker.
             const [_, __, posicao] = item.Posicao.replace(/\s/g, '').split('/');
@@ -161,7 +161,7 @@ export const preencherControladoraOptions = (Controladoras) => {
         if (tipo === '2018' || tipo === '2024') {
             // Para controladoras dos tipos '2018' e '2024', utiliza a placa como identificador.
             identificador = dados.placa;
-        } else if (tipo === '2023' || tipo === 'Locker' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Opus') {
+        } else if (tipo === '2023' || tipo === 'Locker' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Upus') {
             // Para controladoras dos tipos '2023' e 'Locker', utiliza o dip como identificador.
             identificador = dados.dip;
         } else {
@@ -303,7 +303,7 @@ export const selectAll = (controladora) => {
         // Preenche a propriedade 'posicao' com uma lista de números de 1 a 20.
         controladora.dados.posicao = Array.from({ length: 12 }, (_, i) => i + 1);
     }
-    if (controladora.tipo === 'Locker-Opus') {
+    if (controladora.tipo === 'Locker-Upus') {
         // Preenche a propriedade 'posicao' com uma lista de números de 1 a 25.
         controladora.dados.posicao = Array.from({ length: 25 }, (_, i) => i + 1);
     }
@@ -328,7 +328,7 @@ export const desselectAll = (controladora) => {
     }
 
     // Verifica se o tipo da controladora é 'Locker'
-    if (controladora.tipo === 'Locker-Padrao' || controladora.tipo === 'Locker-Ker' || controladora.tipo === 'Locker-Opus') {
+    if (controladora.tipo === 'Locker-Padrao' || controladora.tipo === 'Locker-Ker' || controladora.tipo === 'Locker-Upus') {
         // Limpa a lista de posições da controladora do tipo 'Locker'
         controladora.dados.posicao = [];
     }
@@ -493,7 +493,7 @@ export const validarCampos = (produtoSelecionado, tipoControladoraSelecionada) =
 
             break;
         case 'Locker-Ker':
-        case 'Locker-Opus':
+        case 'Locker-Upus':
             // Verifica se os campos obrigatórios estão preenchidos
             if (!produtoSelecionado.id_produto || !produtoSelecionado.Controladora || produtoSelecionado.Dip == null || !produtoSelecionado.Posicao) {
                 throw new Error('Preencha todos os campos obrigatórios para a controladora Locker.');
@@ -526,7 +526,7 @@ export const updateTipoControladora = (index, tipo, Controladoras, nextValues) =
         2023: 90, // Limite de 90 controladoras do tipo '2023'
         'Locker-Padrao': Infinity,// Sem limite para controladoras do tipo 'Locker'
         'Locker-Ker': Infinity, // Sem limite para controladoras do tipo 'Locker'
-        'Locker-Opus': Infinity, // Sem limite para controladoras do tipo 'Locker'
+        'Locker-Upus': Infinity, // Sem limite para controladoras do tipo 'Locker'
         2024: Infinity // Sem limite para controladoras do tipo '2024'
     };
 
@@ -559,9 +559,9 @@ export const updateTipoControladora = (index, tipo, Controladoras, nextValues) =
         // Se for do tipo 'Locker', incrementa o valor de 'dip' e garante que 'posicao' seja um array
         controladora.dados.dip = nextValues['Locker-Ker'].dip++;
         controladora.dados.posicao = controladora.dados.posicao || []; // Garante que 'posicao' seja um array
-    } else if (tipo === 'Locker-Opus') {
+    } else if (tipo === 'Locker-Upus') {
         // Se for do tipo 'Locker', incrementa o valor de 'dip' e garante que 'posicao' seja um array
-        controladora.dados.dip = nextValues['Locker-Opus'].dip++;
+        controladora.dados.dip = nextValues['Locker-Upus'].dip++;
         controladora.dados.posicao = controladora.dados.posicao || []; // Garante que 'posicao' seja um array
     }
 };
@@ -583,7 +583,7 @@ export const findControladora = (tipo, identificador, Controladoras) => {
                 return c.dados.placa === identificador;
             }
             // Se o tipo for '2023' ou 'Locker', verifica se o dip da controladora corresponde ao identificador fornecido
-            else if (tipo === '2023' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Opus') {
+            else if (tipo === '2023' || tipo === 'Locker-Padrao' || tipo === 'Locker-Ker' || tipo === 'Locker-Upus') {
                 return c.dados.dip === identificador;
             }
         }
@@ -627,7 +627,7 @@ export const updateProdutoSelecionado = (produtoSelecionado, tipo, valores) => {
         produtoSelecionado.Dip = Number(valores[0]);
         // Atribui o valor da posição como um número
         produtoSelecionado.Posicao = Number(valores[1]);
-    } else if (tipo === 'Locker-Ker' || tipo === 'Locker-Opus') {
+    } else if (tipo === 'Locker-Ker' || tipo === 'Locker-Upus') {
         // Atribui o valor do Dip como um número
         produtoSelecionado.Dip = Number(valores[0]);
         // Atribui o valor da posição como um número
@@ -799,5 +799,5 @@ export const FormatarListaCliente = (ListaClientes, simple = false) => {
     });
 };
 export const isArmario = (tipo) => {    // Verifica se o tipo é um armário.
-    return ['Locker', 'Locker-Padrao', 'Locker-Ker', 'Locker-Opus'].includes(tipo?.toString());    // Retorna verdadeiro se o tipo for 'Locker', 'Locker-Padrao' ou 'Locker-Ker'.
+    return ['Locker', 'Locker-Padrao', 'Locker-Ker', 'Locker-Upus'].includes(tipo?.toString());    // Retorna verdadeiro se o tipo for 'Locker', 'Locker-Padrao' ou 'Locker-Ker'.
 };
