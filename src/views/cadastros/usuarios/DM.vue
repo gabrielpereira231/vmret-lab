@@ -525,7 +525,9 @@ const atualizarDM = async () => {
         active.value = '0';
         resetDMForm(DM, Controladoras, selectedClient.value, nextValues);
     } catch (error) {
-        toast.add({ severity: 'error', summary: t('title_error'), detail: t('dm_update_error'), life: 3000 });
+        // Erro de validação do backend (ex.: DIP/placa já usado) vem com a mensagem explicando o motivo.
+        const detail = error.response?.status === 400 && error.response.data?.message ? error.response.data.message : t('dm_update_error');
+        toast.add({ severity: 'error', summary: t('title_error'), detail, life: 5000 });
         console.error('Erro ao atualizar DM:', error);
     } finally {
         loading.value = false;
